@@ -8,7 +8,7 @@ def compond_yield(base, percent, duration):
     return round(base * (1 + percent) ** duration)
 
 
-st.title("Hello 401k")
+st.title("Wow 401k")
 base = int(st.text_input("base", "2000000"))
 percent = float(st.text_input("yearly yield %", "0.15") )
 year_min= 2024
