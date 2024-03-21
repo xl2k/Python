@@ -22,7 +22,7 @@ year_place_holder = st.empty()
 year_place_holder.text = year
 total_place_holder = st.empty()
 total = base * (1 + percent) ** duration
-st.caption(# round(total))
+st.caption(round(total))
 
 if "df" not in st.session_state:
     st.session_state.df = {}
