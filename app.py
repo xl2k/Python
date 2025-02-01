@@ -7,13 +7,17 @@ import time
 def compond_yield(base, percent, duration):
     return round(base * (1 + percent) ** duration)
 
+def compond_yield_with_yearly_contribution(base, yearlyContribution, percent, duration):
+    return compond_yield(base, percent, duration) + round(yearlyContribution * ((1 + percent) ** duration - 1)/(1 + percent - 1))
 
 st.title("Wow 401k")
-base = int(st.text_input("base", "2000000"))
+starting_base = 2700000
+base = int(st.text_input("base", str(starting_base)))
+yearlyContribution = int(st.text_input("Yearly New Contribution", 10000))
 percent = float(st.text_input("yearly yield %", "0.15") )
-year_min= 2024
-year_max= 2034
-year = st.slider('year?', min_value=year_min, max_value=year_max, step=1)
+year_min= 2025
+year_max= 2045
+year = st.slider('Duration in year', min_value=year_min, max_value=year_max, step=1)
 
 duration = year - year_min
 st.write(f"duration = {duration}")
@@ -21,8 +25,12 @@ st.write(f"duration = {duration}")
 year_place_holder = st.empty()
 year_place_holder.text = year
 total_place_holder = st.empty()
-total = base * (1 + percent) ** duration
-st.markdown(":smile: " + str(round(total)))
+total_0 = (base) * (1 + percent) ** duration
+delta = yearlyContribution * ((1 + percent) ** duration - 1)/(1 + percent - 1)
+total = base * (1 + percent) ** duration + yearlyContribution * ((1 + percent) ** duration - 1)/(1 + percent - 1)
+st.markdown(":smile: Base Line Yield: " + str(round(total_0)))
+st.markdown(":smile: Yearly New Yield: " + str(round(delta)))
+st.markdown(":smile: Total Yield: " + str(round(total)))
 
 if "df" not in st.session_state:
     st.session_state.df = {}
@@ -31,7 +39,7 @@ if "df" not in st.session_state:
 
 
 st.session_state.year_list = list(range(year_min, year+1)) # reconstruct the year list each time
-st.session_state.amt =[compond_yield(base, percent, x-min(st.session_state.year_list)) for x in st.session_state.year_list] 
+st.session_state.amt =[compond_yield_with_yearly_contribution(base, yearlyContribution, percent, x-min(st.session_state.year_list)) for x in st.session_state.year_list] 
 
 
 
