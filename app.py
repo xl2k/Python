@@ -4,11 +4,11 @@ import datetime
 import time
 
 
-def compond_yield(base, percent, duration):
+def compound_yield(base, percent, duration):
     return round(base * (1 + percent) ** duration)
 
-def compond_yield_with_yearly_contribution(base, yearlyContribution, percent, duration):
-    return compond_yield(base, percent, duration) + round(yearlyContribution * ((1 + percent) ** duration - 1)/(1 + percent - 1))
+def compound_yield_with_yearly_contribution(base, yearlyContribution, percent, duration):
+    return compound_yield(base, percent, duration) + round(yearlyContribution * ((1 + percent) ** duration - 1)/(1 + percent - 1))
 
 st.title("Wow 401k")
 starting_base = 2700000
@@ -39,7 +39,7 @@ if "df" not in st.session_state:
 
 
 st.session_state.year_list = list(range(year_min, year+1)) # reconstruct the year list each time
-st.session_state.amt =[compond_yield_with_yearly_contribution(base, yearlyContribution, percent, x-min(st.session_state.year_list)) for x in st.session_state.year_list] 
+st.session_state.amt =[compound_yield_with_yearly_contribution(base, yearlyContribution, percent, x-min(st.session_state.year_list)) for x in st.session_state.year_list] 
 
 
 
