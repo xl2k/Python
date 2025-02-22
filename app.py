@@ -3,14 +3,15 @@ import pandas as pd
 import datetime
 import time
 
-
+@st.cache_data
 def compound_yield(base, percent, duration):
     return round(base * (1 + percent) ** duration)
 
+@st.cache_data
 def compound_yield_with_yearly_contribution(base, yearlyContribution, percent, duration):
     return compound_yield(base, percent, duration) + round(yearlyContribution * ((1 + percent) ** duration - 1)/(1 + percent - 1))
 
-st.title("Wow 401k")
+st.title("The Power of compound yield")
 starting_base = 2700000
 base = int(st.text_input("base", str(starting_base)))
 yearlyContribution = int(st.text_input("Yearly New Contribution", 10000))
