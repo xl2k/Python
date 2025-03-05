@@ -22,7 +22,7 @@ cols = st.columns(3)
 # Display tiles dynamically
 for index, tile in enumerate(tiles):
     with cols[index % 3]:  # Place in one of the three columns
-        st.image(tile["image"], use_column_width=True)
+        st.image(tile["image"])
         st.subheader(tile["title"])
         st.write(tile["description"])
         st.button(f"More Info", key=f"btn_{index}")
